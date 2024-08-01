@@ -40,6 +40,7 @@ const App = () => {
       <div className='w-1/2 m-4 shadow-lg rounded-lg bg-palette-200'> 
 
         <div className='text-center'>
+          <p>hi</p>
         
         <AutocompleteComponent/>
          <WeatherData {...weatherDatas} />
