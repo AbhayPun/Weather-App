@@ -13,17 +13,19 @@ const PollutionData = ({prop}) => {
         .then(response => response.json())
         .then(data => {
             setPollutionData(data);
+            console.log(pollutionData);         
                          
           });
 
     }, []);
-console.log(pollutionData);   
+      
+    console.log("over here friends " + pollutionData);
    
 
     return (
  
         <>
-      {pollutionData && 
+    {pollutionData ?
        <table >
         <tr>
           <th>Air Quality Index:</th>
@@ -35,14 +37,35 @@ console.log(pollutionData);
          </tr>
          <tr>
            <th>no: </th>
-           <td>{pollutionData.list[1].components.no}</td>
+           <td>{pollutionData.list[0].components.no}</td>
          </tr>
          <tr>
            <th>no2</th>
-           <td>{pollutionData.list[1].components.no2}</td>
+           <td>{pollutionData.list[0].components.no2}</td>
          </tr>
+         <tr>
+           <th>o3</th>
+           <td>{pollutionData.list[0].components.o3}</td>
+         </tr>
+         <tr>
+           <th>so2</th>
+           <td>{pollutionData.list[0].components.so2}</td>
+         </tr>
+         <tr>
+           <th>pm2_5</th>
+           <td>{pollutionData.list[0].components.pm2_5}</td>
+         </tr>
+         <tr>
+           <th>pm10</th>
+           <td>{pollutionData.list[0].components.pm10}</td>
+         </tr>
+         <tr>
+           <th>nh3</th>
+           <td>{pollutionData.list[0].components.nh3}</td>
+         </tr>
+        
 
-        </table>
+        </table> : <p>Fetching Data...</p>
       
    
      
@@ -50,6 +73,7 @@ console.log(pollutionData);
 
    
       </>
+     
     )
 }
 

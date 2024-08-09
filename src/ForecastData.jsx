@@ -13,7 +13,7 @@ useEffect(() => {
         .then(response => response.json())
         .then(data => {
             setForecastData(data);  
-            console.log(data);           
+            console.log(forecastData);           
           });
     
 }, []);
@@ -43,7 +43,7 @@ useEffect(() => {
 
         </div>
 
-        {forecastData &&
+        {forecastData ?
             <table>
                 <tr>
             <th>date and time</th>
@@ -95,7 +95,7 @@ useEffect(() => {
             <td>{forecastData.list[timestamp].rain ? forecastData.list[0].rain['3h'] +' mm': "N/A"}</td>
           </tr>
 
-        </table>
+        </table> : <p>Fetching Data..</p>
         }
         
         </>

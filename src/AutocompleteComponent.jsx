@@ -10,14 +10,13 @@ let apiKey = '2641a57e3b89c2c422220ad89a310ddd';
 let lat;
 let long;
 let urlWeather;
-let urlPollution;
 let center = [28.3949, 84.1240]
-const AutocompleteComponent = () => {
+const AutocompleteComponent = ({onDataChange }) => {
 
 
-    const [alldata,setalldata] =useState();
     const [url,seturl]=useState();
     const [dataType, setDataType] = useState(null);
+    const [location, setLocation] = useState();
 
     const styling = {
       border: '2px solid rgb(75 85 99)',
@@ -72,22 +71,49 @@ const AutocompleteComponent = () => {
         }
     ]
     
+    const handleLocationChange = (location) =>
+       { setLocation(location);
+        switch (location) {
+          case items[0].name:
+            setLocation(items[0].name);
+            break;
+            case items[1].name:
+              setLocation(items[1].name);
+              break;
+              case items[2].name:
+            setLocation(items[2].name);
+            break;
+            case items[3].name:
+            setLocation(items[3].name);
+            break;
+            case items[4].name:
+            setLocation(items[4].name);
+            break;
+            case items[5].name:
+            setLocation(items[5].name);
+            break;
+        default:
+            setLocation('');
+        }
+
+
+       }
 
             const handleOnSelect = (item) => {
                 lat = item.latitude;
                 long = item.longitude;
                 urlWeather = url;
-                
+                const data = [[item.latitude, item.longitude],item.name]
+                onDataChange(data);
                 }
 
           const formatResult = (item) => {
-          center = [item.latitude, item.longitude]
+          //center = [item.latitude, item.longitude]
 
         return (
 
               <>
                 <span style={{ display: 'block', textAlign: 'left' }}>{item.name}</span>
-                
               </>
               
             )
@@ -124,10 +150,10 @@ const handleButtonClick = (type) => {
 
         </div>
         </header>
-
+        
         <div className="flex items-center justify-center py-3">
         <div className="w-[400px]">
-          <ReactSearchAutocomplete items={items} formatResult={formatResult} onSelect={handleOnSelect} styling={styling}/>
+          <ReactSearchAutocomplete items={items} formatResult={formatResult} onSelect={handleOnSelect} styling={styling} />
 
                 
                     {dataType === 'weather' && <WeatherData prop={url} />}

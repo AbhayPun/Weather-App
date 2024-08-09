@@ -5,7 +5,6 @@ import { useState, useEffect } from 'react';
 
 const WeatherData =({prop}) => {
     const [weatherData, setWeatherData] = useState();
-    cosnt [timestamp, setTimestamp] = usestate();
     const url=prop;
 
  useEffect(() => {
@@ -13,17 +12,16 @@ const WeatherData =({prop}) => {
         fetch(url)
         .then(response => response.json())
         .then(data => {
-            // let greg = JSON.parse(data);
             setWeatherData(data);         
-            console.log(data);         
+            console.log(weatherData);         
           });
 
 },[]);
-
+console.log("over here friends " + weatherData);    
 
     return(
       <>
-      {weatherData && 
+      {weatherData ?
       
        <table >
     <tr>
@@ -63,7 +61,7 @@ const WeatherData =({prop}) => {
     <th>Wind Degrees</th>
     <td>{weatherData.wind.deg}°</td>
   </tr>
-  </table>
+  </table> : <p>Fetching Data...</p>
    
       }
     </>
