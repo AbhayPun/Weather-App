@@ -13,10 +13,12 @@ useEffect(() => {
         .then(response => response.json())
         .then(data => {
             setForecastData(data);  
-            console.log(forecastData);           
-          });
+          })
+
+          
     
 }, []);
+
 
     const left = ()=> {
         (timestamp === 0  ) ? setTimestamp(0):
@@ -35,15 +37,19 @@ useEffect(() => {
 
     return (
         <>
-    
-        <div className='flex justify-evenly py-3'>
-            <button onClick={left} className='border-2 border-gray-700 rounded-lg p-1'>left </button>
-            <button onClick={right} className='border-2 border-gray-700 rounded-lg	p-1'> right</button>
-            <h1 className='border-2 border-gray-700 rounded-lg	p-1'>Date and Time {forecastData && (forecastData.list[timestamp].dt_txt ? forecastData.list[timestamp].dt_txt : "N/A")}</h1>
+        
+        
 
-        </div>
+        
+         <div className='flex justify-evenly py-3'>
+             <button onClick={left} className='border-2 border-gray-700 rounded-lg p-1'>left </button>
+             <button onClick={right} className='border-2 border-gray-700 rounded-lg	p-1'> right</button>
+             <h1 className='border-2 border-gray-700 rounded-lg	p-1'>Date and Time {forecastData && (forecastData.list[timestamp].dt_txt ? forecastData.list[timestamp].dt_txt : "N/A")}</h1>
 
-        {forecastData ?
+         </div>
+
+{forecastData ?
+
             <table>
                 <tr>
             <th>date and time</th>
@@ -88,17 +94,18 @@ useEffect(() => {
           </tr>
           <tr>
             <th>Probability of precipitation</th>
-            <td>{(forecastData.list[timestamp].pop * 100)? (forecastData.list[timestamp].pop * 100) : "N/A"} %</td>
-          </tr>
-          <tr>
-            <th>Rain volume for last 3 hours</th>
-            <td>{forecastData.list[timestamp].rain ? forecastData.list[0].rain['3h'] +' mm': "N/A"}</td>
-          </tr>
-
-        </table> : <p>Fetching Data..</p>
-        }
+              <td>{(forecastData.list[timestamp].pop * 100)? (forecastData.list[timestamp].pop * 100) : "N/A"} %</td>
+            </tr>
+            <tr>
+              <th>Rain volume for last 3 hours</th>
+              <td>{forecastData.list[timestamp].rain ? forecastData.list[0].rain['3h'] +' mm': "N/A"}</td>
+            </tr>
+          </table> : <p>Fetching Data...</p> 
         
-        </>
+}
+            
+          </>
+        
     )
 }
 

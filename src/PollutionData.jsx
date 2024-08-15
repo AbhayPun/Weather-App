@@ -6,26 +6,24 @@ import { useState, useEffect } from 'react';
 const PollutionData = ({prop}) => {
     const [pollutionData, setPollutionData] = useState();
     const url=prop;
-
     useEffect(() => {
     
         fetch(url)
         .then(response => response.json())
         .then(data => {
             setPollutionData(data);
-            console.log(pollutionData);         
-                         
-          });
+        })
+          
+          
 
     }, []);
-      
-    console.log("over here friends " + pollutionData);
-   
+
 
     return (
- 
-        <>
-    {pollutionData ?
+        
+         <>
+
+{pollutionData ?
        <table >
         <tr>
           <th>Air Quality Index:</th>
@@ -65,14 +63,11 @@ const PollutionData = ({prop}) => {
          </tr>
         
 
-        </table> : <p>Fetching Data...</p>
-      
-   
-     
-      }
+        </table> : <p>Fetching Data...</p> }
+    
 
-   
-      </>
+</>
+       
      
     )
 }

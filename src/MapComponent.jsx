@@ -1,9 +1,7 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect } from "react";
 import 'leaflet/dist/leaflet.css';
 import { MapContainer, useMap, TileLayer, Marker, Tooltip  } from 'react-leaflet';
 import L from 'leaflet';
-
-let center = [28.3949, 84.1240]
 
 const markerIcon = new L.Icon({
   iconUrl: '/Icons/marker_icon.svg', 
@@ -24,7 +22,7 @@ return null;
 }
 
 
-const MapComponent = ({ prop,prop2 }) => {
+const MapComponent = ({ prop, prop2 }) => {
 
 
   

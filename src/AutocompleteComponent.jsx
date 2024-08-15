@@ -1,22 +1,19 @@
+
 import { ReactSearchAutocomplete } from 'react-search-autocomplete'
 import WeatherData from './WeatherData';
-import { useEffect, useState, useContext } from 'react';
-import MapComponent from './MapComponent';
+import { useState } from 'react';
 import PollutionData from './PollutionData';
 import ForecastData from './ForecastData';
 
 
 let apiKey = '2641a57e3b89c2c422220ad89a310ddd';
-let lat;
-let long;
-let urlWeather;
-let center = [28.3949, 84.1240]
-const AutocompleteComponent = ({onDataChange }) => {
+const AutocompleteComponent = ({onDataChange}) => {
 
 
-    const [url,seturl]=useState();
+    const [url,setUrl]=useState();
     const [dataType, setDataType] = useState(null);
-    const [location, setLocation] = useState();
+    const [lat, setLat] =useState();
+    const [long, setLong] =useState();
 
     const styling = {
       border: '2px solid rgb(75 85 99)',
@@ -71,70 +68,47 @@ const AutocompleteComponent = ({onDataChange }) => {
         }
     ]
     
-    const handleLocationChange = (location) =>
-       { setLocation(location);
-        switch (location) {
-          case items[0].name:
-            setLocation(items[0].name);
-            break;
-            case items[1].name:
-              setLocation(items[1].name);
-              break;
-              case items[2].name:
-            setLocation(items[2].name);
-            break;
-            case items[3].name:
-            setLocation(items[3].name);
-            break;
-            case items[4].name:
-            setLocation(items[4].name);
-            break;
-            case items[5].name:
-            setLocation(items[5].name);
-            break;
-        default:
-            setLocation('');
-        }
-
-
-       }
 
             const handleOnSelect = (item) => {
-                lat = item.latitude;
-                long = item.longitude;
-                urlWeather = url;
-                const data = [[item.latitude, item.longitude],item.name]
-                onDataChange(data);
+                setLat(item.latitude);
+                setLong(item.longitude);
+                onDataChange([[item.latitude, item.longitude], item.name]);
                 }
 
           const formatResult = (item) => {
-          //center = [item.latitude, item.longitude]
 
         return (
 
               <>
                 <span style={{ display: 'block', textAlign: 'left' }}>{item.name}</span>
+                
               </>
               
             )
           }
 
 const handleButtonClick = (type) => {
+      let newUrl = '';
       setDataType(type); // Set the type of data to fetch
+      
       switch (type) {
           case 'weather':
-              seturl(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${apiKey}`);
+              newUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${apiKey}`;
               break;
           case 'pollution':
-              seturl(`http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${long}&appid=${apiKey}`);
+              newUrl = `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${long}&appid=${apiKey}`;
               break;
           case 'forecast':
-              seturl(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&appid=${apiKey}`);
+              newUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&appid=${apiKey}`;
               break;
           default:
-              seturl('');
+              newUrl = '';
       }
+      setUrl(newUrl);
   };
+
+  console.log( url);
+  console.log(lat, long);
 
     return (
       
@@ -150,10 +124,10 @@ const handleButtonClick = (type) => {
 
         </div>
         </header>
-        
+
         <div className="flex items-center justify-center py-3">
         <div className="w-[400px]">
-          <ReactSearchAutocomplete items={items} formatResult={formatResult} onSelect={handleOnSelect} styling={styling} />
+          <ReactSearchAutocomplete items={items} formatResult={formatResult} onSelect={handleOnSelect} styling={styling}/>
 
                 
                     {dataType === 'weather' && <WeatherData prop={url} />}

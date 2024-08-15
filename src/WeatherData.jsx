@@ -12,17 +12,18 @@ const WeatherData =({prop}) => {
         fetch(url)
         .then(response => response.json())
         .then(data => {
-            setWeatherData(data);         
-            console.log(weatherData);         
-          });
+          setWeatherData(data);
+          })
 
-},[]);
-console.log("over here friends " + weatherData);    
+
+},[prop]);
+
+
 
     return(
       <>
-      {weatherData ?
-      
+  {weatherData ?
+    
        <table >
     <tr>
     <th>Description</th>
@@ -61,10 +62,11 @@ console.log("over here friends " + weatherData);
     <th>Wind Degrees</th>
     <td>{weatherData.wind.deg}°</td>
   </tr>
-  </table> : <p>Fetching Data...</p>
+  </table>  : <p>Fetching Data...</p>
    
-      }
-    </>
+  }
+  
+   </>
 
     )
 }
