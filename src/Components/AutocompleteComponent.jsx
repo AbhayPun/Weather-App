@@ -1,19 +1,17 @@
-
 import { ReactSearchAutocomplete } from 'react-search-autocomplete'
 import WeatherData from './WeatherData';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PollutionData from './PollutionData';
 import ForecastData from './ForecastData';
 
-
 let apiKey = '2641a57e3b89c2c422220ad89a310ddd';
-const AutocompleteComponent = ({onDataChange}) => {
+const AutocompleteComponent = ({onDataChange, type}) => {
 
 
     const [url,setUrl]=useState();
-    const [dataType, setDataType] = useState(null);
     const [lat, setLat] =useState();
     const [long, setLong] =useState();
+
 
     const styling = {
       border: '2px solid rgb(75 85 99)',
@@ -67,6 +65,7 @@ const AutocompleteComponent = ({onDataChange}) => {
           longitude:80.9871
         }
     ]
+
     
 
             const handleOnSelect = (item) => {
@@ -74,6 +73,8 @@ const AutocompleteComponent = ({onDataChange}) => {
                 setLong(item.longitude);
                 onDataChange([[item.latitude, item.longitude], item.name]);
                 }
+
+                
 
           const formatResult = (item) => {
 
@@ -87,52 +88,26 @@ const AutocompleteComponent = ({onDataChange}) => {
             )
           }
 
-const handleButtonClick = (type) => {
-      let newUrl = '';
-      setDataType(type); // Set the type of data to fetch
-      
-      switch (type) {
-          case 'weather':
-              newUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${apiKey}`;
-              break;
-          case 'pollution':
-              newUrl = `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${long}&appid=${apiKey}`;
-              break;
-          case 'forecast':
-              newUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&appid=${apiKey}`;
-              break;
-          default:
-              newUrl = '';
-      }
-      setUrl(newUrl);
-  };
+          useEffect(() => {
+            if (lat !== undefined && long !== undefined && type !== undefined) {
+                setUrl(`https://api.openweathermap.org/data/2.5/${type}?lat=${lat}&lon=${long}&appid=${apiKey}`);
+            }
+        }, [lat, long, type]);
 
-  console.log( url);
-  console.log(lat, long);
 
     return (
       
       
       <div>
-      <header>
-      <div className='flex justify-evenly bg-gray-100'>
-
-          <button className='hover:underline focus:bg-gray-200 py-1 px-10 transition-all border rounded-tl-lg	' onClick={() => handleButtonClick('weather')}  >Today's Weather</button>
-          <button className='hover:underline focus:bg-gray-200  py-1 px-10 transition-all border 6' onClick={() => handleButtonClick('pollution')}>Today's Pollution </button>
-          <button className='hover:underline focus:bg-gray-200  py-1 px-10 transition-all border 6' onClick={() => handleButtonClick('forecast')}>Forecast </button>
-          <button className='hover:underline focus:bg-gray-200  py-1 px-10 transition-all border rounded-tr-lg	' >Historical Pollution </button>
-
-        </div>
-        </header>
-
+   
         <div className="flex items-center justify-center py-3">
         <div className="w-[400px]">
           <ReactSearchAutocomplete items={items} formatResult={formatResult} onSelect={handleOnSelect} styling={styling}/>
 
-                
-                    {dataType === 'weather' && <WeatherData prop={url} />}
-                    {dataType === 'pollution' && <PollutionData prop={url} />}
-                    {dataType === 'forecast' && <ForecastData prop={url} />}
+
+                    {type === 'air_pollution' && <PollutionData prop={url} />}
+                    {type === 'weather' && <WeatherData prop={url} />}
+                    {type === 'forecast' && <ForecastData prop={url} />}
         
 
           <p>{formatResult}</p>
