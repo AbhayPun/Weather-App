@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import PollutionData from './PollutionData';
 import ForecastData from './ForecastData';
 
-let apiKey = '2641a57e3b89c2c422220ad89a310ddd';
+const apiKey = process.env.REACT_APP_API_KEY ;
 const AutocompleteComponent = ({onDataChange, type}) => {
 
 
