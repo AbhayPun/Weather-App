@@ -4,9 +4,12 @@ import { useEffect, useState } from 'react';
 import PollutionData from './PollutionData';
 import ForecastData from './ForecastData';
 
-const apiKey = process.env.REACT_APP_API_KEY ;
+const apiKey = process.env.REACT_APP_API_KEY;
+console.log(apiKey);
+
 const AutocompleteComponent = ({onDataChange, type}) => {
 
+  
 
     const [url,setUrl]=useState();
     const [lat, setLat] =useState();
