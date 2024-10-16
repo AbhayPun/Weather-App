@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 
 const WeatherData =({prop}) => {
     const [weatherData, setWeatherData] = useState();
-    cosnt [timestamp, setTimestamp] = usestate();
+    const [timestamp, setTimestamp] = useState();
     const url=prop;
 
  useEffect(() => {
